@@ -1,0 +1,41 @@
+{% import "_includes/forms" as forms %}
+
+{% set config = {
+    id: name,
+    name: name,
+    value: value,
+    class: 'nicetext mgautocomplete--'~name,
+    maxlength: settings.maxLength,
+    showCharsLeft: true,
+    placeholder: settings.placeholder,
+    rows: settings.initialRows
+} %}
+
+{% if settings.multiline %}
+    {{ forms.textarea(config) }}
+{% else %}
+    {{ forms.text(config) }}
+{% endif %}
+
+{% set addAutocompletions %}
+    $(function() {
+
+        jQuery.ui.autocomplete.prototype._resizeMenu = function () {
+            var ul = this.menu.element;
+            ul.outerWidth(this.element.outerWidth());
+        }
+
+        var {{ name }}_availableTags = [
+        {% for completion in completions %}
+            "{{ completion|e('js') }}"{{ loop.last ? '' : ',' }}
+        {% endfor %}
+        ];
+        $( ".mgautocomplete--{{ name }}" ).autocomplete({
+            source: {{ name }}_availableTags
+        })
+        .autocomplete("widget")
+        .addClass('mgautocomplete__ul');
+    });
+{% endset %}
+
+{% includeJs addAutocompletions %}
