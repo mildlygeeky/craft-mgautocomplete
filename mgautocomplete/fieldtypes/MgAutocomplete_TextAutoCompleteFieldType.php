@@ -16,32 +16,40 @@ class MgAutocomplete_TextAutoCompleteFieldType extends PlainTextFieldType
         craft()->templates->includeJsResource('mgautocomplete/js/jquery.ui.autocomplete.js');
 
         return craft()->templates->render('mgautocomplete/plaintext', array(
-            'name'        => $name,
-            'value'       => $value,
-            'completions' => $this->getFieldCompletions($name, $this->element),
-            'settings'    => $this->getSettings()
+            'name' => $name,
+            'value' => $value,
+            'completions' => $this->_getAllCompletions($name, $this->element),
+            'settings' => $this->getSettings()
         ));
     }
 
-    protected function getFieldCompletions($name, $element)
+    protected function _getAllCompletions($name, $element)
     {
-        $fieldCol = 'field_'.$name;
+        $completions = array();
+
+        $field = craft()->fields->getFieldByHandle($name);
+        if ($field == null or !$field->hasContentColumn()) {
+            return $completions;
+        }
+
+        $contentTable = craft()->content->contentTable;
+
+        $fieldCol = 'field_' . $name;
 
         $query = craft()->db->createCommand()
             ->selectDistinct($fieldCol)
-            ->from('content')
+            ->from($contentTable)
             ->where(array(
                 'locale' => $element->getAttribute('locale')
             ))
-            ->andWhere($fieldCol.' is not null')
+            ->andWhere($fieldCol . ' is not null')
             ->queryAll();
 
-        $completions = array();
-
-        for ($i=0; $i < count($query); $i++) {
+        for ($i = 0; $i < count($query); $i++) {
             array_push($completions, $query[$i][$fieldCol]);
         }
 
         return $completions;
     }
+
 }

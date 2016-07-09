@@ -11,6 +11,8 @@ Fieldtype that adds autocomplete functionality, pulling in all values ever enter
 
 Add the "Autocomplete" field to any element. Data entered for the field (across all sections, but respecting locales) will be available via an autocomplete widget on the text field.
 
+The field can only add autocompletion to fields that have their content in the "craft_content" table. If embedded in a Matrix, SuperTable, Neo, or other sub-element fieldtype, it will gracefully degrade to work the same as a normal Plain Text field.
+
 ## Credits
 
 * jQuery UI's Autocomplete library (https://jqueryui.com/autocomplete/)

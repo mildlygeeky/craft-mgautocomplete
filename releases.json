@@ -1,0 +1,12 @@
+[
+  {
+    "version": "2.0.0",
+    "downloadUrl": "https://github.com/mildlygeeky/craft-mgautocomplete/archive/master.zip",
+    "date": "2016-07-08T11:00:00-11:00",
+    "notes": [
+      "[Fixed] Really amateurish code that pretended everything lived in craft_content",
+      "[Fixed] Graceful degradation back to a normal plaintext field when used in Matrix, SuperTable, Neo, etc.",
+      "[Added] Proper 2.5 / 2.6 support"
+    ]
+  }
+]
