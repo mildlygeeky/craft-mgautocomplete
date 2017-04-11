@@ -11,8 +11,7 @@ class MgAutocomplete_TextAutoCompleteFieldType extends PlainTextFieldType
     public function getInputHtml($name, $value)
     {
         craft()->templates->includeCssResource('mgautocomplete/css/style.css');
-        craft()->templates->includeJsResource('lib/fileupload/jquery.ui.widget.js');
-        craft()->templates->includeJsResource('mgautocomplete/js/jquery.ui.menu.js');
+        craft()->templates->includeJsResource('mgautocomplete/js/jquery.ui.deps.js');
         craft()->templates->includeJsResource('mgautocomplete/js/jquery.ui.autocomplete.js');
 
         return craft()->templates->render('mgautocomplete/plaintext', array(
